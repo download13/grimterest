@@ -1,0 +1,32 @@
+{
+  "name": "@download/grimterist",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "node dist/server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Erin Dachtler <download333@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.9.0",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-async-to-generator": "^6.8.0",
+    "babel-plugin-transform-class-properties": "^6.10.2",
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-plugin-transform-react-jsx": "^6.8.0",
+    "babel-preset-es2015-native-modules": "6.6.0",
+    "prux": "0.0.2",
+    "nop": "^1.0.0",
+    "webpack": "^2.1.0-beta.13",
+    "whatwg-fetch": "^1.0.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "flutter": "0.0.5",
+    "knex": "0.11.5",
+    "objection": "^0.5.1",
+    "sqlite3": "^3.1.4"
+  }
+}

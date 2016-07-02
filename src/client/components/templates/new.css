@@ -1,0 +1,27 @@
+:local .holder {
+	max-width: 600px;
+	margin: 20px auto;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+:local .url {
+	width: 100%;
+	margin: 0 0 20px 0;
+	padding: 8px;
+	font-size: 18px;
+	box-sizing: border-box;
+}
+
+:local .desc {
+	width: 100%;
+	height: 100px;
+	padding: 8px;
+	font-size: 18px;
+	margin: 0 0 20px 0;
+	box-sizing: border-box;
+}
+
+:local .buttonHolder {
+	text-align: center;
+}
