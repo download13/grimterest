@@ -5,14 +5,15 @@ registerComponent('login-form', {
 	props: {user: null},
 	render({h, props}) {
 		if(props.user) {
-			return <div style="text-align:center;padding-top:100px;">You are already logged in</div>;
+			return <span>You are already logged in</span>;
 		}
 
-		return <div style="text-align:center;padding-top:100px;">
+		return [
+			<div class="title is-3">Select your login method</div>,
 			<button class="button is-primary is-large">
 				<span class="icon "><i class="fa fa-twitter"></i></span>&nbsp;
-				Login with Twitter
+				<span>Login with Twitter</span>
 			</button>
-		</div>;
+		];
 	}
 });

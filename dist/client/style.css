@@ -51,3 +51,12 @@ pin-card > a > * {
 	flex-grow: 1;
 	flex-shrink: 0;
 }
+
+login-form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: #fff;
+	min-height: 400px;
+}
