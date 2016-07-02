@@ -4,7 +4,7 @@ import {registerComponent} from 'prux';
 registerComponent('create-pin', {
 	props: {},
 	render({h, props}) {
-		return <div>
+		return <div style="width:500px;">
 			<div class="control">
 				<input class="input" placeholder="Image URL" type="url"/>
 			</div>
