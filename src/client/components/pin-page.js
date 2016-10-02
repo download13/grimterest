@@ -1,16 +1,16 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {browserHistory, Link} from 'react-router';
 
 
-const PinPage = ({pin, isOwner}) => {
-	const {id, image_url, text, post_time, poster_name, poster_avatar} = pin;
+const PinPage = ({pin, isOwner, deletePin}) => {
+	const {id, image_url, text, post_time, poster_id, poster_name, poster_avatar} = pin;
 
 	const postTime = new Date(post_time);
 
 	let editBox = null;
 	if(isOwner) {
-		// TODO: Add a delete link
-		editBox = <button>Delete</button>;
+		editBox = <button onClick={() => deletePin(id)}>Delete</button>;
 	}
 
 	return <div className="pin-page card" href={`/pins/${id}`}>
@@ -28,7 +28,7 @@ const PinPage = ({pin, isOwner}) => {
 				</div>
 				<div className="media-content">
 					<div className="content">
-						<p className="title is-5">{poster_name}</p>
+						<p className="title is-5"><Link to={'/user/' + poster_id}>{poster_name}</Link></p>
 					</div>
 				</div>
 			</div>
@@ -56,9 +56,26 @@ const blankPin = {
 
 export default connect(
 	({pinCache, user}) => ({pinCache, user}),
-	() => ({}),
-	({pinCache, user}, _, {params}) => ({
-		pin: pinCache[params.id] || blankPin,
-		isOwner: user.id && user.id === pinCache[params.id].poster_id
-	})
+	dispatch => ({
+		deletePin(id) {
+			fetch('/api/pin/' + id, {
+				method: 'DELETE',
+				credentials: 'same-origin'
+			}).then(res => {
+				if(res.status === 200) {
+					dispatch({type: 'UNCACHE_PIN'});
+					browserHistory.push('/user');
+				}
+			});
+		}
+	}),
+	({pinCache, user}, {deletePin}, {params}) => {
+		const pin = pinCache[params.id] || blankPin;
+		
+		return {
+			pin,
+			isOwner: user.id && user.id === pin.poster_id,
+			deletePin
+		};
+	}
 )(PinPage);

@@ -17,7 +17,9 @@ export default {
 				...pins,
 				[payload.id]: payload
 			};
-		} else if(type === 'STORE_POPULAR' || type === 'STORE_MY') {
+		} else if(type === 'UNCACHE_PIN') {
+			return without(pins, payload);
+		} else if(type === 'STORE_POPULAR' || type === 'STORE_USER_PINS') {
 			return {
 				...pins,
 				...pinsArraytoMap(payload)
@@ -33,12 +35,29 @@ export default {
 
 		return pins;
 	},
-	myPins(pins = [], {type, payload}) {
-		if(type === 'STORE_MY') {
-			return payload.map(item => item.id);
+	userPins(users = {}, {type, payload}) {
+		if(type === 'STORE_USER_PINS') {
+			if(payload[0]) {
+				const userId = payload[0].poster_id;
+				
+				return {
+					...users,
+					[userId]: payload.map(pin => pin.id)
+				};
+			}
 		}
 
-		return pins;
+		return users;
+	},
+	userCache(users = {}, {type, payload}) {
+		if(type === 'CACHE_USER') {
+			return {
+				...users,
+				[payload.id]: payload
+			};
+		}
+
+		return users;
 	},
 	user(user = initalUser, {type, payload}) {
 		if(type === 'SET_USER') {
@@ -71,5 +90,13 @@ function pinsArraytoMap(arr) {
 
 	arr.forEach(item => r[item.id] = item);
 
+	return r;
+}
+
+function without(obj, key) {
+	const r = {...obj};
+	
+	delete r[key];
+	
 	return r;
 }

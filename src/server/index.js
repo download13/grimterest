@@ -13,8 +13,9 @@ const app = express()
 	.set('x-powered-by', false);
 
 app.get('/', serveApp);
-app.get('/my', serveApp);
-app.get('/pins/:id', serveApp);
+app.get('/user', serveApp);
+app.get('/user/:id', serveApp);
+app.get('/pin/:id', serveApp);
 app.get('/login', serveApp);
 app.get('/create', serveApp);
 

@@ -46,7 +46,8 @@ module.exports = [
 					loader: 'babel-loader',
 					exclude: /node_modules/,
 					query: {
-						presets: ['babel-preset-es2015-native-modules']
+						presets: ['babel-preset-es2015-native-modules'],
+						plugins: ['babel-plugin-transform-object-rest-spread']
 					}
 				}
 			]

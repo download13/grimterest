@@ -7,16 +7,24 @@ const jsonBody = bodyParser.json();
 
 export default app => {
 	app.get('/api/user', usersOnly, (req, res) => {
-		dbGet('SELECT * FROM users WHERE id = ?', [req.userId])
-			.then(user => {
-				res.send(user);
-			}, err => {
-				res.status(500).send(err.message);
-				console.error(err);
-			});
+		res.redirect('/api/user/' + req.userId);
 	});
 
-	app.get('/api/user/pins', usersOnly, (req, res) => {
+	app.get('/api/user/:id', (req, res) => {
+		const {id} = req.params;
+		// TODO: remove email from public user data
+		dbGet('SELECT * FROM users WHERE id = ?', [id]).then(
+			({id, name, avatar_url}) => res.send({id, name, avatar_url}),
+			err => {
+				res.status(500).send(err.message);
+				console.error(err);
+			}
+		);
+	});
+
+	app.get('/api/user/:id/pins', (req, res) => {
+		const {id} = req.params;
+
 		const page = parseInt(req.query.page);
 
 		const validatedPage = isNaN(page) ? 0 : page;
@@ -32,11 +40,11 @@ export default app => {
 				users.name as poster_name,
 				users.avatar_url as poster_avatar
 		 	FROM pins
-				INNER JOIN users ON users.id = pins.poster_id
+				INNER JOIN users ON users.id = poster_id
 			WHERE poster_id = ?
 			ORDER BY post_time DESC
 			LIMIT 20 OFFSET ?
-		`, [req.userId, validatedPage * 20])
+		`, [id, validatedPage])
 			.then(rows => {
 				res.send(rows);
 			}, err => {
@@ -73,8 +81,8 @@ export default app => {
 			});
 	});
 
-	app.get('/api/pin', (req, res) => {
-		const {id} = req.query;
+	app.get('/api/pin/:id', (req, res) => {
+		const {id} = req.params;
 
 		dbGet(`
 			SELECT
@@ -114,6 +122,20 @@ export default app => {
 			res.status(500).send(err.message);
 			console.error(err);
 		});
+	});
+	
+	app.delete('/api/pin/:id', usersOnly, (req, res) => {
+		// TODO: Do something
+		dbRun('DELETE FROM pins WHERE id = ? AND poster_id = ?', [
+			req.params.id,
+			req.userId
+		]).then(
+			() => res.send('Deleted'),
+			err => {
+				res.status(500).send(err.message);
+				console.error(err);
+			}
+		);
 	});
 };
 

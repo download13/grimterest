@@ -7,7 +7,7 @@ import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
 import reducers, {initalUser} from './reducers';
 import App from './components/app';
 import PopularPins from './components/popular-pins';
-import MyPins from './components/my-pins';
+import UserPins from './components/user-pins';
 import PinPage from './components/pin-page';
 import 'whatwg-fetch';
 import Login from './components/login';
@@ -28,9 +28,10 @@ render(
 	<Provider store={store}>
 		<Router history={history}>
 			<Route path="/" component={App}>
-				<IndexRoute component={PopularPins} onEnter={refreshPopularPins} />
-				<Route path="my" component={MyPins} onEnter={refreshMyPins} />
-				<Route path="pins/:id" component={PinPage} onEnter={loadPin} />
+				<IndexRoute component={PopularPins} onEnter={loadPopularPins} />
+				<Route path="user" onEnter={redirectToMe} />
+				<Route path="user/:id" component={UserPins} onEnter={loadUserWithPins} />
+				<Route path="pin/:id" component={PinPage} onEnter={loadPin} />
 				<Route path="login" component={Login} onEnter={refreshUser} />
 				<Route path="create" component={CreatePin} onEnter={ensureLoggedIn} />
 			</Route>
@@ -42,23 +43,33 @@ render(
 refreshUser();
 
 
-function refreshPopularPins() {
+function loadPopularPins() {
 	fetch('/api/pins')
 		.then(res => res.json())
 		.then(pins => store.dispatch({type: 'STORE_POPULAR', payload: pins}));
 }
 
-// TODO: only store if not 401 status
-function refreshMyPins() {
-	fetch('/api/user/pins', {credentials: 'same-origin'})
-		.then(res => res.json())
-		.then(pins => store.dispatch({type: 'STORE_MY', payload: pins}));
-}
-
 function loadPin({params}) {
-	fetch('/api/pin?id=' + params.id)
+	fetch('/api/pin/' + params.id)
 		.then(res => res.json())
 		.then(pin => store.dispatch({type: 'CACHE_PIN', payload: pin}));
+}
+
+function loadUserWithPins({params: {id}}) {
+	loadUser(id);
+	loadUserPins(id);
+}
+
+function loadUser(id) {
+	fetch('/api/user/' + id)
+		.then(res => res.json())
+		.then(pin => store.dispatch({type: 'CACHE_USER', payload: pin}));
+}
+
+function loadUserPins(id) {
+	fetch(`/api/user/${id}/pins`)
+		.then(res => res.json())
+		.then(pins => store.dispatch({type: 'STORE_USER_PINS', payload: pins}));
 }
 
 function ensureLoggedIn(props, replace) {
@@ -79,4 +90,14 @@ function refreshUser() {
 			}
 		})
 		.then(user => store.dispatch({type: 'SET_USER', payload: user}));
+}
+
+function redirectToMe(props, replace) {
+	const {id} = store.getState().user;
+	
+	if(id) {
+		replace('/user/' + id);
+	} else {
+		replace('/');
+	}
 }

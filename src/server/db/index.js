@@ -2,7 +2,7 @@ import {Database} from 'sqlite3';
 import {pins, users} from './sample-data';
 import uuid from 'uuidv4';
 import {createHash} from 'crypto';
-import config from './config';
+import config from '../config';
 
 
 let db = null;
@@ -10,10 +10,7 @@ let db = null;
 export function dbConnect() {
 	return createDb()
 		.then(database => db = database)
-		.then(() => Promise.all([
-			buildUsers(),
-			buildPins()
-		]));
+		.then(ensureSampleData);
 }
 
 function createDb() {
@@ -23,6 +20,19 @@ function createDb() {
 			else resolve(database);
 		});
 	});
+}
+
+function ensureSampleData() {
+	return dbGet('SELECT id FROM users WHERE id = bab2a452-6179-4914-87a8-f5169e42b729')
+		.then(user => {
+			if(!user) {
+				return Promise.all([
+					buildUsers(),
+					buildPins()
+				]);
+			}
+		})
+		.catch(err => null);
 }
 
 function buildUsers() {

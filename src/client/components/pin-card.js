@@ -5,7 +5,7 @@ import {Link} from 'react-router';
 const PinCard = ({id, image_url, text, post_time, poster_name, poster_avatar}) => {
 	const postTime = new Date(post_time);
 
-	return <Link className="pin-card card" to={`/pins/${id}`}>
+	return <Link className="pin-card card" to={`/pin/${id}`}>
 		<div className="card-image">
 			<figure className="image">
 				<img src={image_url}/>
