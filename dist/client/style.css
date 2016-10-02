@@ -3,18 +3,19 @@ body {
 	min-height: 100vh;
 }
 
-grimterist-app {
+.grimterist-app {
 	display: block;
 	max-width: 900px;
 	margin: 0 auto;
 }
 
-grimterist-header {
+.grimterist-header {
 	display: block;
 	margin-bottom: 10px;
 }
 
-popular-pins {
+
+.pin-wall {
 	display: block;
 	-webkit-column-width: 240px;
 	-ms-column-width: 240px;
@@ -34,7 +35,7 @@ popular-pins {
 	column-fill: balance;
 }
 
-pin-card {
+.pin-card {
 	display: block;
 	margin-bottom: 12px;
 	-webkit-column-break-inside: avoid;
@@ -42,21 +43,27 @@ pin-card {
 	break-inside: avoid;
 }
 
-pin-card > a {
-	display: flex;
-	flex-direction: column;
+
+.pin-page {
+	display: block;
+	width: auto;
+	margin-bottom: 12px;
 }
 
-pin-card > a > * {
-	flex-grow: 1;
-	flex-shrink: 0;
-}
 
-login-form {
+.login-form {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	background-color: #fff;
 	min-height: 400px;
+}
+
+
+.create-pin {
+	display: flex;
+	justify-content: center;
+	background-color: #fff;
+	padding: 50px;
 }

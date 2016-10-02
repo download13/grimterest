@@ -3,12 +3,12 @@ import {connect} from 'react-redux';
 import PinCard from './pin-card';
 
 
-const PopularPins = ({pins}) => {
+const MyPins = ({pins}) => {
 	return <div className="pin-wall">
 		{pins.map(pin => <PinCard key={pin.id} {...pin} />)}
 	</div>
 };
 
 export default connect(
-	({popularPins, pinCache}) => ({pins: popularPins.map(id => pinCache[id])})
-)(PopularPins);
+	({myPins, pinCache}) => ({pins: myPins.map(id => pinCache[id])})
+)(MyPins);

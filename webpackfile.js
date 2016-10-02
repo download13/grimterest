@@ -15,7 +15,7 @@ module.exports = [
 					query: {
 						presets: ['babel-preset-es2015-native-modules'],
 						plugins: [
-							['babel-plugin-transform-react-jsx', {pragma: 'h'}],
+							['babel-plugin-transform-react-jsx'],
 							'babel-plugin-transform-object-rest-spread'
 						]
 					}
@@ -33,6 +33,7 @@ module.exports = [
 		externals: {
 			'express': 'commonjs express',
 			'sqlite3': 'commonjs sqlite3',
+			'connect-sqlite3': 'commonjs connect-sqlite3',
 			'knex': 'commonjs knex',
 			'objection': 'commonjs objection',
 			'flutter': 'commonjs flutter',
@@ -45,11 +46,7 @@ module.exports = [
 					loader: 'babel-loader',
 					exclude: /node_modules/,
 					query: {
-						presets: ['babel-preset-es2015-native-modules'],
-						plugins: [
-							'babel-plugin-transform-async-to-generator',
-							'babel-plugin-transform-class-properties'
-						]
+						presets: ['babel-preset-es2015-native-modules']
 					}
 				}
 			]

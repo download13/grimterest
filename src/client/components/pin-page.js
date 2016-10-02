@@ -1,11 +1,13 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {connect} from 'react-redux';
 
 
-const PinCard = ({id, image_url, text, post_time, poster_name, poster_avatar}) => {
+const PinPage = ({pin}) => {
+	const {id, image_url, text, post_time, poster_name, poster_avatar} = pin;
+
 	const postTime = new Date(post_time);
 
-	return <Link className="pin-card card" to={`/pins/${id}`}>
+	return <div className="pin-page card" href={`/pins/${id}`}>
 		<div className="card-image">
 			<figure className="image">
 				<img src={image_url}/>
@@ -31,7 +33,21 @@ const PinCard = ({id, image_url, text, post_time, poster_name, poster_avatar}) =
 				<small>{postTime.toLocaleTimeString()} - {postTime.toLocaleDateString()}</small>
 			</div>
 		</div>
-	</Link>
+	</div>
 };
 
-export default PinCard;
+
+const blankPin = {
+	id: '',
+	image_url: 'about:blank',
+	text: '',
+	post_time: 0,
+	poster_name: '',
+	poster_avatar: 'about:blank'
+};
+
+export default connect(
+	({pinCache}) => ({pinCache}),
+	() => ({}),
+	({pinCache}, _, {params}) => ({pin: pinCache[params.id] || blankPin})
+)(PinPage);

@@ -1,19 +1,25 @@
-import {registerComponent} from 'prux';
+import React from 'react';
+import {connect} from 'react-redux';
 
 
-registerComponent('login-form', {
-	props: {user: null},
-	render({h, props}) {
-		if(props.user) {
-			return <span>You are already logged in</span>;
-		}
-
-		return [
-			<div class="title is-3">Select your login method</div>,
-			<button class="button is-primary is-large">
-				<span class="icon "><i class="fa fa-twitter"></i></span>&nbsp;
-				<span>Login with Twitter</span>
-			</button>
-		];
+const Login = ({loggedIn, user}) => {
+	if(loggedIn) {
+		return <span>You are already logged in</span>
 	}
-});
+
+	return <div className="login-form">
+		<div className="title is-3">Select your login method</div>
+		<button className="button is-primary is-large" onClick={loginWithTwitter}>
+			<span className="icon"><i className="fa fa-twitter"></i></span>&nbsp;
+			<span>Login with Twitter</span>
+		</button>
+	</div>
+};
+
+function loginWithTwitter() {
+	window.location.assign('/auth/twitter');
+}
+
+export default connect(
+	({user}) => ({loggedIn: !!user.id, user})
+)(Login);

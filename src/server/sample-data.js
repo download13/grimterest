@@ -1,19 +1,25 @@
-const users = [
+export const users = [
 	{
 		id: 'bab2a452-6179-4914-87a8-f5169e42b729',
-		email: 'download333@gmail.com',
 		name: 'Erin',
-		avatarUrl: 'https://www.gravatar.com/avatar/d859dbbfbcf31ca5d3a3aa975f8e7898'
+		email: 'download333@gmail.com',
+		avatar_url: 'https://www.gravatar.com/avatar/d859dbbfbcf31ca5d3a3aa975f8e7898'
 	},
 	{
 		id: 'a0d0e4e4-019d-45a0-9648-8efe17400c53',
 		name: 'Shane',
 		email: 'test@example.org',
-		avatarUrl: 'https://www.gravatar.com/avatar/0c17bf66e649070167701d2d3cd71711'
+		avatar_url: 'https://www.gravatar.com/avatar/0c17bf66e649070167701d2d3cd71711'
+	},
+	{
+		id: '40d0e434-019d-45a0-9648-8eff27450c53',
+		name: 'IPFSTube',
+		email: 'ipfstube@erindachtler.me',
+		avatar_url: 'https://www.gravatar.com/avatar/0c17bf66e649070167701d2d3cd717a1'
 	}
 ];
 
-const pins = [
+const pinData = [
 	{
 		id: 'ee284203-5723-4acf-acd7-92bd2562beec',
 		"imageUrl": "https://s-media-cache-ak0.pinimg.com/236x/82/8f/db/828fdb9ef3de927ea879a53c03145ab0.jpg",
@@ -170,7 +176,7 @@ const pins = [
 	}
 ];
 
-const userPins = pins.map(item => {
+export const pins = pinData.map(item => {
 	const user = users[Math.floor(Math.random() * users.length)];
 	return {
 		id: item.id,
@@ -181,11 +187,3 @@ const userPins = pins.map(item => {
 		posterId: user.id
 	};
 });
-
-exports.seed = knex =>
-	knex('users')
-		.del()
-		.then(() => knex('users').insert(users))
-		.then(() => knex('pins').del())
-		.then(() => knex('pins').insert(userPins))
-;
