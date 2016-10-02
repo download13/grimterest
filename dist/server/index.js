@@ -4386,7 +4386,7 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__auth_twitter__["a" /* default
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__api__["a" /* default */])(app);
 
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__db__["e" /* dbConnect */])().then(function () {
-	app.listen(80, function () {
+	app.listen(process.env.PORT || 80, process.env.IP || '127.0.0.1', function () {
 		console.log('Listening' + (DEV ? ' dev' : ''));
 	});
 });
@@ -4401,10 +4401,10 @@ function serveApp(req, res) {
 
 "use strict";
 /* harmony default export */ exports["a"] = {
-	protocol: 'http',
-	domain: '127.0.0.1',
-	database: ':memory:',
-	sessionDatabase: ':memory:'
+	protocol: 'https',
+	domain: 'grimterest-download13.c9users.io',
+	database: 'storage/main',
+	sessionDatabase: 'storage/session'
 };
 
 /***/ }

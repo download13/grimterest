@@ -1,6 +1,6 @@
 export default {
-	protocol: 'http',
-	domain: '127.0.0.1',
-	database: ':memory:',
-	sessionDatabase: ':memory:'
+	protocol: 'https',
+	domain: 'grimterest-download13.c9users.io',
+	database: 'storage/main',
+	sessionDatabase: 'storage/session'
 };

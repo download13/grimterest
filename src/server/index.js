@@ -23,7 +23,7 @@ authRoutes(app);
 apiRoutes(app);
 
 dbConnect().then(() => {
-	app.listen(80, () => {
+	app.listen(process.env.PORT || 80, process.env.IP || '127.0.0.1', () => {
 		console.log('Listening' + (DEV ? ' dev' : ''));
 	});
 });
