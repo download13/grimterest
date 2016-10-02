@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {browserHistory, Link} from 'react-router';
+import ReactImageFallback from 'react-image-fallback';
 
 
 const PinPage = ({pin, isOwner, deletePin}) => {
@@ -16,14 +17,14 @@ const PinPage = ({pin, isOwner, deletePin}) => {
 	return <div className="pin-page card" href={`/pins/${id}`}>
 		<div className="card-image">
 			<figure className="image">
-				<img src={image_url}/>
+				<ReactImageFallback src={image_url} fallbackImage="/default-image.jpg" />
 			</figure>
 		</div>
 		<div className="card-content">
 			<div className="media" style={{alignItems: 'center'}}>
 				<div className="media-left">
 					<figure className="image is-32x32">
-						<img src={poster_avatar}/>
+						<img src={poster_avatar} />
 					</figure>
 				</div>
 				<div className="media-content">
