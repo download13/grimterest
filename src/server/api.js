@@ -28,6 +28,7 @@ export default app => {
 				thumb_url,
 				text,
 				post_time,
+				poster_id,
 				users.name as poster_name,
 				users.avatar_url as poster_avatar
 		 	FROM pins
@@ -56,6 +57,7 @@ export default app => {
 				thumb_url,
 				text,
 				post_time,
+				poster_id,
 				users.name as poster_name,
 				users.avatar_url as poster_avatar
 		 	FROM pins
@@ -81,6 +83,7 @@ export default app => {
 				thumb_url,
 				text,
 				post_time,
+				poster_id,
 				users.name as poster_name,
 				users.avatar_url as poster_avatar
 			FROM pins

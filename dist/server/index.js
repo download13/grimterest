@@ -952,7 +952,7 @@ var jsonBody = __WEBPACK_IMPORTED_MODULE_2_body_parser___default.a.json();
 
 		var validatedPage = isNaN(page) ? 0 : page;
 
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__db__["c" /* dbGetAll */])('\n\t\t\tSELECT\n\t\t\t\tpins.id,\n\t\t\t\timage_url,\n\t\t\t\tthumb_url,\n\t\t\t\ttext,\n\t\t\t\tpost_time,\n\t\t\t\tusers.name as poster_name,\n\t\t\t\tusers.avatar_url as poster_avatar\n\t\t \tFROM pins\n\t\t\t\tINNER JOIN users ON users.id = pins.poster_id\n\t\t\tWHERE poster_id = ?\n\t\t\tORDER BY post_time DESC\n\t\t\tLIMIT 20 OFFSET ?\n\t\t', [req.userId, validatedPage * 20]).then(function (rows) {
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__db__["c" /* dbGetAll */])('\n\t\t\tSELECT\n\t\t\t\tpins.id,\n\t\t\t\timage_url,\n\t\t\t\tthumb_url,\n\t\t\t\ttext,\n\t\t\t\tpost_time,\n\t\t\t\tposter_id,\n\t\t\t\tusers.name as poster_name,\n\t\t\t\tusers.avatar_url as poster_avatar\n\t\t \tFROM pins\n\t\t\t\tINNER JOIN users ON users.id = pins.poster_id\n\t\t\tWHERE poster_id = ?\n\t\t\tORDER BY post_time DESC\n\t\t\tLIMIT 20 OFFSET ?\n\t\t', [req.userId, validatedPage * 20]).then(function (rows) {
 			res.send(rows);
 		}, function (err) {
 			res.status(500).send(err.message);
@@ -965,7 +965,7 @@ var jsonBody = __WEBPACK_IMPORTED_MODULE_2_body_parser___default.a.json();
 
 		var validatedPage = isNaN(page) ? 0 : page;
 
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__db__["c" /* dbGetAll */])('\n\t\t\tSELECT\n\t\t\t\tpins.id,\n\t\t\t\timage_url,\n\t\t\t\tthumb_url,\n\t\t\t\ttext,\n\t\t\t\tpost_time,\n\t\t\t\tusers.name as poster_name,\n\t\t\t\tusers.avatar_url as poster_avatar\n\t\t \tFROM pins\n\t\t\t\tINNER JOIN users ON users.id = pins.poster_id\n\t\t\tORDER BY post_time DESC\n\t\t\tLIMIT 20 OFFSET ?\n\t\t', [validatedPage * 20]).then(function (rows) {
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__db__["c" /* dbGetAll */])('\n\t\t\tSELECT\n\t\t\t\tpins.id,\n\t\t\t\timage_url,\n\t\t\t\tthumb_url,\n\t\t\t\ttext,\n\t\t\t\tpost_time,\n\t\t\t\tposter_id,\n\t\t\t\tusers.name as poster_name,\n\t\t\t\tusers.avatar_url as poster_avatar\n\t\t \tFROM pins\n\t\t\t\tINNER JOIN users ON users.id = pins.poster_id\n\t\t\tORDER BY post_time DESC\n\t\t\tLIMIT 20 OFFSET ?\n\t\t', [validatedPage * 20]).then(function (rows) {
 			res.send(rows);
 		}, function (err) {
 			res.status(500).send(err.message);
@@ -977,7 +977,7 @@ var jsonBody = __WEBPACK_IMPORTED_MODULE_2_body_parser___default.a.json();
 		var id = req.query.id;
 
 
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__db__["b" /* dbGet */])('\n\t\t\tSELECT\n\t\t\t\tpins.id,\n\t\t\t\timage_url,\n\t\t\t\tthumb_url,\n\t\t\t\ttext,\n\t\t\t\tpost_time,\n\t\t\t\tusers.name as poster_name,\n\t\t\t\tusers.avatar_url as poster_avatar\n\t\t\tFROM pins\n\t\t\t\tINNER JOIN users ON users.id = pins.poster_id\n\t\t\tWHERE pins.id = ?\n\t\t', [id]).then(function (pin) {
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__db__["b" /* dbGet */])('\n\t\t\tSELECT\n\t\t\t\tpins.id,\n\t\t\t\timage_url,\n\t\t\t\tthumb_url,\n\t\t\t\ttext,\n\t\t\t\tpost_time,\n\t\t\t\tposter_id,\n\t\t\t\tusers.name as poster_name,\n\t\t\t\tusers.avatar_url as poster_avatar\n\t\t\tFROM pins\n\t\t\t\tINNER JOIN users ON users.id = pins.poster_id\n\t\t\tWHERE pins.id = ?\n\t\t', [id]).then(function (pin) {
 			res.send(pin);
 		}, function (err) {
 			res.status(500).send(err.message);

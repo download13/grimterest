@@ -2,10 +2,16 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 
-const PinPage = ({pin}) => {
+const PinPage = ({pin, isOwner}) => {
 	const {id, image_url, text, post_time, poster_name, poster_avatar} = pin;
 
 	const postTime = new Date(post_time);
+
+	let editBox = null;
+	if(isOwner) {
+		// TODO: Add a delete link
+		editBox = <button>Delete</button>;
+	}
 
 	return <div className="pin-page card" href={`/pins/${id}`}>
 		<div className="card-image">
@@ -31,6 +37,8 @@ const PinPage = ({pin}) => {
 				{text}
 				<br/>
 				<small>{postTime.toLocaleTimeString()} - {postTime.toLocaleDateString()}</small>
+				<br/>
+				{editBox}
 			</div>
 		</div>
 	</div>
@@ -47,7 +55,10 @@ const blankPin = {
 };
 
 export default connect(
-	({pinCache}) => ({pinCache}),
+	({pinCache, user}) => ({pinCache, user}),
 	() => ({}),
-	({pinCache}, _, {params}) => ({pin: pinCache[params.id] || blankPin})
+	({pinCache, user}, _, {params}) => ({
+		pin: pinCache[params.id] || blankPin,
+		isOwner: user.id && user.id === pinCache[params.id].poster_id
+	})
 )(PinPage);
